@@ -27,6 +27,25 @@ pipeline {
                 '''
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                        echo "Running SonarQube analysis..."
+                        if ! command -v sonar-scanner &> /dev/null; then
+                            wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+                            unzip -q sonar-scanner-cli-5.0.1.3006-linux.zip
+                            export PATH=$PWD/sonar-scanner-5.0.1.3006-linux/bin:$PATH
+                        fi
+                        sonar-scanner \
+                          -Dsonar.projectKey=student-task-manager \
+                          -Dsonar.sources=. \
+                          -Dsonar.host.url=http://localhost:9000 \
+                          -Dsonar.token=$SONAR_TOKEN
+                    '''
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying application'
@@ -47,10 +66,10 @@ pipeline {
     }
     post {
         success {
-            echo 'CI/CD pipeline completed successfully'
+            echo 'CI/CD pipeline completed successfully with SonarQube analysis'
         }
         failure {
-            echo 'Pipeline failed - deployment was not completed'
+            echo 'Pipeline failed'
         }
     }
 }
