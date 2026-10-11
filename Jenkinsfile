@@ -23,7 +23,7 @@ pipeline {
             steps {
                 echo 'Running automated tests'
                 sh '''
-                    .venv/bin/pytest -q
+                    .venv/bin/python -m pytest -q
                 '''
             }
         }
