@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Task Manager</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Student Task Manager</h1>
+    <p class="subtitle">Jenkins CI/CD Demonstration</p>
+    <form action="/add" method="POST" class="task-form">
+        <input type="text" name="title" placeholder="Enter a new task" required>
+        <button type="submit">Add Task</button>
+    </form>
+    <div class="summary">Completed Tasks: {{ completed }}</div>
+    <div class="tasks">
+        {% for task in tasks %}
+        <div class="task">
+            {% if task.completed %}
+                <span class="completed">✓ {{ task.title }}</span>
+            {% else %}
+                <span>{{ task.title }}</span>
+                <form action="/complete/{{ task.id }}" method="POST">
+                    <button type="submit">Complete</button>
+                </form>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

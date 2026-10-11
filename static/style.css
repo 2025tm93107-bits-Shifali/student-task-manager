@@ -1,0 +1,7 @@
+body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 40px; }
+.container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 12px; }
+.task-form { display: flex; gap: 10px; margin: 25px 0; }
+input { flex: 1; padding: 12px; }
+button { padding: 10px 16px; border: none; border-radius: 5px; cursor: pointer; }
+.task { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid #ddd; }
+.completed { text-decoration: line-through; color: #777; }
